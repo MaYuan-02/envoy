@@ -1,79 +1,73 @@
 {
-  "name": "Envoy Dev (Stable)",
+    "name": "Envoy Dev (Stable)",
 
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
 
-  "workspaceFolder": "/build",
+    "workspaceFolder": "/build",
 
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/build,type=bind"
-  ],
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/build,type=bind",
+        "source=./build_test/,target=/home/envoybuild/.cache,type=bind"],
 
-  "remoteUser": "envoybuild",
-  "updateRemoteUserUID": true,
+    "remoteUser": "envoybuild",
+    "updateRemoteUserUID": true,
+    
 
-  "remoteEnv": {
-    "HOME": "/home/envoybuild",
-    "VSCODE_AGENT_FOLDER": "/home/envoybuild/.vscode-server",
-    "ENVOY_SRCDIR": "/build",
+    "remoteEnv": {
+        "HOME": "/home/envoybuild",
+        "VSCODE_AGENT_FOLDER": "/home/envoybuild/.vscode-server",
+        "ENVOY_SRCDIR": "/build",
 
-    "HTTPS_PROXY": "${env:VSCODE_CONTAINER_HTTPS_PROXY}",
-    "HTTP_PROXY": "${env:VSCODE_CONTAINER_HTTP_PROXY}",
-    "NO_PROXY": "${env:VSCODE_CONTAINER_NO_PROXY}"
-  },
+        "HTTPS_PROXY": "${env:VSCODE_CONTAINER_HTTPS_PROXY}",
+        "HTTP_PROXY": "${env:VSCODE_CONTAINER_HTTP_PROXY}",
+        "NO_PROXY": "${env:VSCODE_CONTAINER_NO_PROXY}",
+        "BAZEL_CACHE": "/build/.bazel_cache"
+    },
 
-  "capAdd": [
-    "SYS_PTRACE",
-    "NET_RAW",
-    "NET_ADMIN"
-  ],
+    "capAdd": ["SYS_PTRACE", "NET_RAW", "NET_ADMIN"],
 
-  "securityOpt": [
-    "seccomp=unconfined"
-  ],
+    "securityOpt": ["seccomp=unconfined"],
 
-  "initializeCommand": ".devcontainer/init.sh",
-  "postCreateCommand": ".devcontainer/setup.sh",
+    "initializeCommand": ".devcontainer/init.sh",
+    "postCreateCommand": ".devcontainer/setup.sh",
 
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash",
 
-        "bazel.buildifierFixOnFormat": true,
+                "bazel.buildifierFixOnFormat": true,
 
-        "clangd.path": "${workspaceFolder}/.devcontainer/clangd-wrapper.sh",
-        "clangd.arguments": [
-          "--query-driver=**"
-        ],
+                "clangd.path": "${workspaceFolder}/.devcontainer/clangd-wrapper.sh",
+                "clangd.arguments": ["--query-driver=**"],
 
-        "python.defaultInterpreterPath": "/usr/bin/python3",
-        "python.formatting.provider": "yapf",
-        "python.formatting.yapfArgs": [
-          "--style=${workspaceFolder}/.style.yapf"
-        ],
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "python.formatting.provider": "yapf",
+                "python.formatting.yapfArgs": [
+                    "--style=${workspaceFolder}/.style.yapf"
+                ],
 
-        "files.exclude": {
-          "**/.clangd/**": true,
-          "**/bazel-*/**": true
-        },
-        "files.watcherExclude": {
-          "**/.clangd/**": true,
-          "**/bazel-*/**": true
+                "files.exclude": {
+                    "**/.clangd/**": true,
+                    "**/bazel-*/**": true
+                },
+                "files.watcherExclude": {
+                    "**/.clangd/**": true,
+                    "**/bazel-*/**": true
+                }
+            },
+
+            "extensions": [
+                "github.vscode-pull-request-github",
+                "zxh404.vscode-proto3",
+                "bazelbuild.vscode-bazel",
+                "llvm-vs-code-extensions.vscode-clangd",
+                "vadimcn.vscode-lldb",
+                "webfreak.debug",
+                "ms-python.python"
+            ]
         }
-      },
-
-      "extensions": [
-        "github.vscode-pull-request-github",
-        "zxh404.vscode-proto3",
-        "bazelbuild.vscode-bazel",
-        "llvm-vs-code-extensions.vscode-clangd",
-        "vadimcn.vscode-lldb",
-        "webfreak.debug",
-        "ms-python.python"
-      ]
     }
-  }
 }
