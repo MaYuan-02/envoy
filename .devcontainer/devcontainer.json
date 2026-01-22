@@ -8,8 +8,7 @@
     "workspaceFolder": "/build",
 
     "mounts": [
-        "source=${localWorkspaceFolder},target=/build,type=bind",
-        "source=./build_test/,target=/home/envoybuild/.cache,type=bind"],
+        "source=${localWorkspaceFolder},target=/build,type=bind"],
 
     "remoteUser": "envoybuild",
     "updateRemoteUserUID": true,
@@ -23,7 +22,9 @@
         "HTTPS_PROXY": "${env:VSCODE_CONTAINER_HTTPS_PROXY}",
         "HTTP_PROXY": "${env:VSCODE_CONTAINER_HTTP_PROXY}",
         "NO_PROXY": "${env:VSCODE_CONTAINER_NO_PROXY}",
-        "BAZEL_CACHE": "/build/.bazel_cache"
+        "BAZEL_CACHE": "/build/.bazel_cache",
+        "BUILD_DIR": "/envoy_build/",
+        "XDG_CACHE_HOME": "/data/cache"
     },
 
     "capAdd": ["SYS_PTRACE", "NET_RAW", "NET_ADMIN"],
